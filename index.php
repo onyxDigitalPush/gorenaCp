@@ -231,7 +231,7 @@ include './Pantalles/HeadGeneric.html';
                     if (localStorage.getItem("card").length != 8) {
                         localStorage.removeItem("card");
                     }
-                }, 4000);
+                }, 300);
             }
             // when reach on certain length within 300 ms, it is not typed by a human being
             if (localStorage.getItem("card").length == 10) {
