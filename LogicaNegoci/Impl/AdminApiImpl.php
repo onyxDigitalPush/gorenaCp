@@ -5961,6 +5961,7 @@ $anyActual = date("Y");
         return $hours_date;
 
     }
+    
 
     public function decimalsToTimeFormat ($decimals)
     {

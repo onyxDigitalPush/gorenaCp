@@ -207,91 +207,89 @@ include './Pantalles/HeadGeneric.html';
 
 </style>
 
+<script>
+        jQuery.fn.simulateKeyPress = function(character) {
+            jQuery(this).trigger({
+                type: 'keypress',
+                which: character.charCodeAt(0)
+            });
+        };
 
 
-<script>    
-            jQuery.fn.simulateKeyPress = function(character) {
-                jQuery(this).trigger({
-                    type: 'keypress',
-                    which: character.charCodeAt(0)
-                });
+        document.onkeypress = function(e) {
+
+            e = e || window.event;
+            var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+            // store it , in this example, i use localstorage
+            if (localStorage.getItem("card") && localStorage.getItem("card") != 'null') {
+                // append on every keypress
+                localStorage.setItem("card", localStorage.getItem("card") + String.fromCharCode(charCode));
+            } else {
+                // remove localstorage if it takes 300 ms (you can set it)
+                localStorage.setItem("card", String.fromCharCode(charCode));
+                setTimeout(function() {
+                    if (localStorage.getItem("card").length != 8) {
+                        localStorage.removeItem("card");
+                    }
+                }, 4000);
+            }
+            // when reach on certain length within 300 ms, it is not typed by a human being
+            if (localStorage.getItem("card").length == 10) {
+                // do some validation
+                var cardString = localStorage.getItem('card');
+
+                insereixAutomarcatge(cardString, 4, 2);
+            }
+        }
+
+
+        function insereixAutomarcatge(id, tipus, lng) {
+
+            var avui = new Date();
+            var any = avui.getFullYear();
+            var mes = checkTime(avui.getMonth() + 1);
+            var dia = checkTime(avui.getDate());
+            var hora = checkTime(avui.getHours());
+            var minut = checkTime(avui.getMinutes());
+            var sec = checkTime(avui.getSeconds());
+            var datahora = any + "-" + mes + "-" + dia + " " + hora + ":" + minut + ":" + sec  ; 
+
+            document.getElementById('idEmp').value = "";
+            $modal = $('#modMarcatge');
+            $modal.modal('hide');
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    popupokhtml(this.responseText);
+                }
+                if (this.readyState == 4 && this.status == 300) {
+
+                    popupokhtml(this.responseText);
+                }
+                if (this.readyState == 4 && this.status == 404) {
+                    popupkohtml(this.responseText);
+                }
             };
-            
+            xmlhttp.open("GET", "Serveis.php?action=insereixAutomarcatge&id=" + id + "&idtipus=" + tipus + "&datahora=" + datahora + "&lng=" + lng, true);
+            xmlhttp.send();
+        }
 
-            document.onkeypress = function(e) {
+        var update_date = 30;
 
-                e = e || window.event;
-                var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-                // store it , in this example, i use localstorage
-                if (localStorage.getItem("card") && localStorage.getItem("card") != 'null') {
-                    // append on every keypress
-                    localStorage.setItem("card", localStorage.getItem("card") + String.fromCharCode(charCode));
-                } else {
-                    // remove localstorage if it takes 300 ms (you can set it)
-                    localStorage.setItem("card", String.fromCharCode(charCode));
-                    setTimeout(function() {
-                        if (localStorage.getItem("card").length != 8) {
-                            localStorage.removeItem("card");
-                        }
-                    }, 300);
+        function automarcatges(idempresa) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+
                 }
-                // when reach on certain length within 300 ms, it is not typed by a human being 
-                if (localStorage.getItem("card").length == 10) {
-                    // do some validation
-                    var cardString = localStorage.getItem('card');
-
-                    insereixAutomarcatge(cardString, 4, 2);
+                if (this.readyState === 4 && this.status === 404) {
+                    popuphtml(this.responseText);
                 }
-            }
-
-
-            function insereixAutomarcatge(id, tipus, lng) {
-              
-                var avui = new Date();
-                var any = avui.getFullYear();
-                var mes = checkTime(avui.getMonth() + 1);
-                var dia = checkTime(avui.getDate());
-                var hora = checkTime(avui.getHours());
-                var minut = checkTime(avui.getMinutes());
-                var sec = checkTime(avui.getSeconds());
-            	var datahora = any + "-" + mes + "-" + dia + " " + hora + ":" + minut + ":" + sec;
-				
-                document.getElementById('idEmp').value = "";
-                $modal = $('#modMarcatge');
-                $modal.modal('hide');
-                
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        popupokhtml(this.responseText);
-                    }
-                    if (this.readyState == 4 && this.status == 300) {
-                       
-                        popupokhtml(this.responseText);
-                    }
-                    if (this.readyState == 4 && this.status == 404) {
-                        popupkohtml(this.responseText);
-                    }
-                };
-                xmlhttp.open("GET", "Serveis.php?action=insereixAutomarcatge&id=" + id + "&idtipus=" + tipus + "&datahora=" + datahora + "&lng=" + lng, true);
-                xmlhttp.send();
-            }
-
-            var update_date = 30;
-
-            function automarcatges(idempresa) {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState === 4 && this.status === 200) {
-                               
-                    }
-                    if (this.readyState === 4 && this.status === 404) {
-                        popuphtml(this.responseText);
-                    }
-                };
-                xmlhttp.open("GET", "Serveis.php?action=automarcatges&1=" + idempresa, true);
-                xmlhttp.send();
-            }
+            };
+            xmlhttp.open("GET", "Serveis.php?action=automarcatges&1=" + idempresa, true);
+            xmlhttp.send();
+        }
 
 
 
@@ -299,16 +297,16 @@ include './Pantalles/HeadGeneric.html';
 
 
 
-            
+
         function carregaInicial(idempresa){
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                   
-            }
-            if (this.readyState === 4 && this.status === 404) {
-                popuphtml(this.responseText);            
-            }
+                if (this.readyState === 4 && this.status === 200) {
+
+                }
+                if (this.readyState === 4 && this.status === 404) {
+                    popuphtml(this.responseText);
+                }
             };
             xmlhttp.open("GET", "Serveis.php?action=carregaInicial&1="+idempresa, true);
             xmlhttp.send();
@@ -317,121 +315,120 @@ include './Pantalles/HeadGeneric.html';
         {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                window.location.reload(window.location);            
-            }
-            if (this.readyState === 4 && this.status === 404) {
-                popupkohtml(this.responseText);            
-            }
+                if (this.readyState === 4 && this.status === 200) {
+                    window.location.reload(window.location);
+                }
+                if (this.readyState === 4 && this.status === 404) {
+                    popupkohtml(this.responseText);
+                }
             };
             xmlhttp.open("GET", "Serveis.php?action=logarse&user=" + user + "&pwd=" + password, true);
             xmlhttp.send();
         }
         function startTime(day,month,year) {
             try{
-            var today = new Date();
-            var h = today.getHours();
-            var m = today.getMinutes();
-            var s = today.getSeconds();
-            var d = today.getDate();
-            var n = today.getMonth()+1;
-            var y = today.getFullYear();
-            if((h===0)&&(m===0)&&(s===0)){
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                   
-                    document.getElementById('datadia').innerHTML = this.responseText;
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                var d = today.getDate();
+                var n = today.getMonth()+1;
+                var y = today.getFullYear();
+                if((h===0)&&(m===0)&&(s===0)){
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState === 4 && this.status === 200) {
+
+                            document.getElementById('datadia').innerHTML = this.responseText;
+                        }
+                        if (this.readyState === 4 && this.status === 404) {
+                            popuphtml(this.responseText);
+                        }
+                    };
+                    xmlhttp.open("GET", "Serveis.php?action=actualitzaData&day="+d+"&month="+n+"&year="+y, true);
+                    xmlhttp.send();
                 }
-                if (this.readyState === 4 && this.status === 404) {
-                    popuphtml(this.responseText);            
-                }
-                };
-                xmlhttp.open("GET", "Serveis.php?action=actualitzaData&day="+d+"&month="+n+"&year="+y, true);
-                xmlhttp.send();
-            }
-            m = checkTime(m);
-            s = checkTime(s);
-            document.getElementById('hora').innerHTML = h + ":" + m + ":" + s;
-            
-            //Update Date
-            var data_dia = document.getElementById("datadia");
-            if(typeof(data_dia) !== 'undefined' && data_dia !== null){
-                var date_text = data_dia.innerHTML;    
-                var regex = /([a-zA-ZÀ-ÿ]*)(\s)(\d*)\s/gi;
-                match = regex.exec(date_text);            
-                if( match[3] < d ) 
-                {
-                    if(update_date <= 1)
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('hora').innerHTML = h + ":" + m + ":" + s;
+
+                //Update Date
+                var data_dia = document.getElementById("datadia");
+                if(typeof(data_dia) !== 'undefined' && data_dia !== null){
+                    var date_text = data_dia.innerHTML;
+                    var regex = /([a-zA-ZÀ-ÿ]*)(\s)(\d*)\s/gi;
+                    match = regex.exec(date_text);
+                    if( match[3] < d )
                     {
-                        window.location.reload(window.location);//Force reload to update date when day changes
-                    }
-                    else
-                    {
-                        update_date--;
+                        if(update_date <= 1)
+                        {
+                            window.location.reload(window.location);//Force reload to update date when day changes
+                        }
+                        else
+                        {
+                            update_date--;
+                        }
                     }
                 }
-            } 
-           
-            setTimeout(function () {startTime(d,n,y);}, 500);
-            
-        }catch(err){alert(err);}
+
+                setTimeout(function () {startTime(d,n,y);}, 500);
+
+            }catch(err){alert(err);}
         }
         function checkTime(i) {
             if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
             return i;
         }
-           
-        function insereixMarcatge(id,tipus,inout,lng)
-        {   
-            if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            var avui = new Date();
-            var any = avui.getFullYear();
-            var mes = checkTime(avui.getMonth()+1);
-            var dia = checkTime(avui.getDate());
-            var hora = checkTime(avui.getHours());
-            var minut = checkTime(avui.getMinutes());
-            var sec = checkTime(avui.getSeconds());
-            var datahora = any+ "-"+mes+ "-"+dia+" "+hora+":"+minut+":"+sec;
-            
-            var lati = pos['lat'];
-            var long = pos['lng'];
-            document.getElementById('idEmp').value = "";
-            $modal = $('#modMarcatge');
-            $modal.modal('hide');
-            
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                popupokhtml(this.responseText);
-            }
-            if (this.readyState == 4 && this.status == 300) {
-                
-                popupokhtml(this.responseText);
-            }
-            if (this.readyState == 4 && this.status == 404) {
-                popupkohtml(this.responseText);
-            }
-            };
-            xmlhttp.open("GET", "Serveis.php?action=insereixMarcatge&id=" +id+ "&idtipus=" +tipus+ "&inout=" +inout+ "&datahora=" +datahora+ "&lng=" +lng+ "&utm_x=" +lati+ "&utm_y=" +long, true);
-            xmlhttp.send();
-            }, function() {
-             
-              navigator.permissions.query({name:'geolocation'})
-          .then(function(permissionStatus) {
-            popuphtml('geolocation permission state is ', permissionStatus.state);
 
-            permissionStatus.onchange = function() {
-              popuphtml('geolocation permission state has changed to ', this.state);
-            };
-          });
-            });
-          }            
+        function insereixMarcatge(id,tipus,inout,lng)
+        {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var avui = new Date();
+                    var any = avui.getFullYear();
+                    var mes = checkTime(avui.getMonth()+1);
+                    var dia = checkTime(avui.getDate());
+                    var hora = checkTime(avui.getHours());
+                    var minut = checkTime(avui.getMinutes());
+                    var datahora = any+"-"+mes+"-"+dia+" "+hora+":"+minut;
+
+                    var lati = pos['lat'];
+                    var long = pos['lng'];
+                    document.getElementById('idEmp').value = "";
+                    $modal = $('#modMarcatge');
+                    $modal.modal('hide');
+
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            popupokhtml(this.responseText);
+                        }
+                        if (this.readyState == 4 && this.status == 300) {
+
+                            popupokhtml(this.responseText);
+                        }
+                        if (this.readyState == 4 && this.status == 404) {
+                            popupkohtml(this.responseText);
+                        }
+                    };
+                    xmlhttp.open("GET", "Serveis.php?action=insereixMarcatge&id=" +id+ "&idtipus=" +tipus+ "&inout=" +inout+ "&datahora=" +datahora+ "&lng=" +lng+ "&utm_x=" +lati+ "&utm_y=" +long, true);
+                    xmlhttp.send();
+                }, function() {
+
+                    navigator.permissions.query({name:'geolocation'})
+                        .then(function(permissionStatus) {
+                            popuphtml('geolocation permission state is ', permissionStatus.state);
+
+                            permissionStatus.onchange = function() {
+                                popuphtml('geolocation permission state has changed to ', this.state);
+                            };
+                        });
+                });
+            }
         }
         function popupokhtml(innerhtml)
         {
@@ -454,60 +451,82 @@ include './Pantalles/HeadGeneric.html';
         }
         function get_location()
         {
-           
-        navigator.permissions.query({name:'geolocation'})
-        .then(function(permissionStatus) {
-          console.log('geolocation permission state is ', permissionStatus.state);
 
-          permissionStatus.onchange = function() {
-            console.log('geolocation permission state has changed to ', this.state);
-          };
-        });
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-
-            
-            window.open('https://www.google.com/maps/search/?api=1&query='+pos['lat']+","+pos['lng']);
-          }, function() {
-            
             navigator.permissions.query({name:'geolocation'})
-        .then(function(permissionStatus) {
-          popuphtml('geolocation permission state is ', permissionStatus.state);
+                .then(function(permissionStatus) {
+                    console.log('geolocation permission state is ', permissionStatus.state);
 
-          permissionStatus.onchange = function() {
-            popuphtml('geolocation permission state has changed to ', this.state);
-          };
-        });
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          popuphtml('Error: The Geolocation service failed.');
-        }
-        //return pos;
+                    permissionStatus.onchange = function() {
+                        console.log('geolocation permission state has changed to ', this.state);
+                    };
+                });
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+
+                    window.open('https://www.google.com/maps/search/?api=1&query='+pos['lat']+","+pos['lng']);
+                }, function() {
+
+                    navigator.permissions.query({name:'geolocation'})
+                        .then(function(permissionStatus) {
+                            popuphtml('geolocation permission state is ', permissionStatus.state);
+
+                            permissionStatus.onchange = function() {
+                                popuphtml('geolocation permission state has changed to ', this.state);
+                            };
+                        });
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                popuphtml('Error: The Geolocation service failed.');
+            }
+            //return pos;
         }
         function fpstartcheck(tipus,entsort,lng)
         {
             try{
-            
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                popuphtml(this.responseText);
-               
-            }
-            if (this.readyState == 4 && this.status == 404) {
-                popupkohtml(this.responseText);
-            }
-            };
-            xmlhttp.open("GET", "Serveis.php?action=startFPcheck", true);
-            xmlhttp.send();
+
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        popuphtml(this.responseText);
+
+                    }
+                    if (this.readyState == 4 && this.status == 404) {
+                        popupkohtml(this.responseText);
+                    }
+                };
+                xmlhttp.open("GET", "Serveis.php?action=startFPcheck", true);
+                xmlhttp.send();
             }catch(err) {popuphtml(err);}
         }
-</script>
+
+        function sendMailRRHH (permitted)
+        {
+			if(permitted == 1)
+            {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+
+                    }
+                    if (this.readyState == 4 && this.status == 404) {
+                        console.log(this.responseText);
+                    }
+                };
+                xmlhttp.open("GET", "Serveis.php?action=sendMailRRHH", true);
+                xmlhttp.send();
+            }
+        }
+
+    </script>
+
+
         
 <?php
        

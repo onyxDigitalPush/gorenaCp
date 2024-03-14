@@ -79,7 +79,7 @@ switch ($_GET["action"])
 
 
 
-    case "insereixAutomarcatge":
+        case "insereixAutomarcatge":
             session_start();
             $idemp = $_GET["id"];
             $idtipus = $_GET["idtipus"];
@@ -95,20 +95,19 @@ switch ($_GET["action"])
                 {
                     $idempleat = $dto->mostraIdEmpPerIdentificador($idemp);
                     $idempresa = $dto->getCampPerIdCampTaula("empleat", $idempleat, "idempresa");
-                    $inout_previo = $dto->getUltimMarcatgePerIdEmpleat($idempleat, "entsort");
-                    $fecha = new DateTime($dto->getUltimMarcatgePerIdEmpleat($idempleat, "datahora"));
-                    $today_date = new DateTime();
-    
+                  
+					$inout_previo = $dto->getUltimMarcatgePerIdEmpleat($idempleat, "entsort");
+                        if (is_numeric($inout_previo) && $inout_previo == 0) $inout = 1;
+                        else $inout = 0;
+					
+					$fecha = date("Y-m-d", strtotime($dto->getUltimMarcatgePerIdEmpleat($idempleat, "datahora")));
+					$fecha = new DateTime($fecha);
+                	$today_date = new DateTime();
+					
+                   
                     $diff = $fecha->diff($today_date);
     
-                    if (is_numeric($inout_previo) && $inout_previo == 0)
-                    {
-                        $inout = 1;
-                    }
-                    else
-                    {
-                        $inout = 0;
-                    }
+                  
                     $primer_marcatge_entrada = $dto->selectPrimerMarcatgeActiu($idempresa);
     
     
@@ -116,6 +115,7 @@ switch ($_GET["action"])
                     {
                         if ($primer_marcatge_entrada == 1 && date("H") > 5)
                         {
+							
                             $inout = 0;
                         }
                     }
@@ -197,6 +197,7 @@ switch ($_GET["action"])
             }
             echo $resposta;
             break;
+
 
 
 
