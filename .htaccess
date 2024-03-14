@@ -1,0 +1,12 @@
+RewriteEngine On 
+# Generate BASE dynamically 
+# It compares REQUEST_URI variable (which is complete path) with the URI matched by # RewriteRule (which is relative to current path) and gets differential in $ %{ENV:BASE} variable. 
+RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$ 
+RewriteRule ^(.*)$ - [E=BASE:%1] 
+RewriteRule ^(html)($|/) - [L] 
+# Redirect requests to %{ENV:BASE}index.php which is index.php of current directory 
+# It also makes sure index.php exists in current directory 
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{DOCUMENT_ROOT}%{ENV:BASE}index\.php -f 
+RewriteRule . %{ENV:BASE}index.php [L]

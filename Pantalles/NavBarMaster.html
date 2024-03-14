@@ -1,0 +1,98 @@
+<?php $dto = new AdminApiImpl();
+    /*echo '<p style="text-align: right">'.$_SESSION["username"].'  ';   
+    $idiomes = $dto->seleccionaIdiomesWeb();
+    $iact = $_SESSION["ididioma"];
+    foreach($idiomes as $idioma) 
+    {
+    $border = '';
+    if($iact==$idioma["ididioma"])$border='style="border: solid 2px;"';
+    echo '<button class="btn btn-default btn-xs" title="'.$idioma["nom"].'" onclick="traduirWeb('.$idioma["ididioma"].');" '.$border.'><img src="'.$idioma["ruta_bandera"].'" style="height: 15px; width: 25px"></button>';//
+    }
+    echo '</p>';*/
+    ?>
+<script>
+    function traduirWeb(ididioma)
+{
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+        window.location.reload(window.location);
+    }
+    };
+    xmlhttp.open("GET", "Serveis.php?action=traduirWeb&ididioma=" + ididioma, true);
+    xmlhttp.send();
+}
+</script>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header" style="height: 61px; width: 150px;">
+      <a id="logo" href="index.php" title="Control de Presència"><image <?php echo "src=".'"'.$_SESSION["logoempresa"].'"'; ?> style="height: 61px; width: 150px;"></a>
+      </div>
+    <ul class="nav navbar-nav navbar-left">
+      <li><a class="btn" href="index.php"><?php echo $dto->__($_SESSION["ididioma"],"Control de Presència"); ?></a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-left">
+      <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $dto->__($_SESSION["ididioma"],"Empleat"); ?>
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="EmpleatFitxa.php"><?php echo $dto->__($_SESSION["ididioma"],"Veure Fitxa"); ?></a></li>
+          <li><a href="EmpleatMarcatges.php"><?php echo $dto->__($_SESSION["ididioma"],"Veure Marcatges"); ?></a></li>
+          <li><a href="ViwerSolicExcep.php?View=1"><?php echo $dto->__($_SESSION["ididioma"],"Ver solicitud de periodos"); ?></a></li>
+        </ul>
+      </li>
+    </ul>
+     <ul class="nav navbar-nav navbar-left">
+      <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $dto->__($_SESSION["ididioma"],"Administrador"); ?>
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="AdminPersones.php"><?php echo $dto->__($_SESSION["ididioma"],"Persones i Marcatges"); ?></a></li>
+          <li><a href="AdminAdvPersones.php"><?php echo $dto->__($_SESSION["ididioma"],"Gestió Avançada Persones"); ?></a></li>
+          <li><a href="AdminActivitats.php"><?php echo $dto->__($_SESSION["ididioma"],"Agenda Setmanal"); ?></a></li>
+          <li><a href="AdminQuadrants.php"><?php echo $dto->__($_SESSION["ididioma"],"Quadrant Mensual"); ?></a></li>
+          <li><a href="AdminMarcatgesTots.php"><?php echo $dto->__($_SESSION["ididioma"],"Marcatges Departament"); ?></a></li>
+          <li><a href="AdminInformeBaixes.php"><?php echo $dto->__($_SESSION["ididioma"],"Informe Absencies"); ?></a></li>
+          <li><a href="AdminEmpresa.php"><?php echo $dto->__($_SESSION["ididioma"],"Ajustaments"); ?></a></li>
+          <li><a href="ViwerSolicExcep.php?View=957"><?php echo $dto->__($_SESSION["ididioma"],"solicitudes de periodos"); ?></a></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-left">
+      <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Master
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="MasterAplicacio.php"><?php echo $dto->__($_SESSION["ididioma"],"Ajustaments Aplicació"); ?></a></li>
+          <li><a href="MasterDiccionaris.php"><?php echo $dto->__($_SESSION["ididioma"],"Editar Diccionaris"); ?></a></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a class="btn" href="Logout.php" title="<?php echo $dto->__($_SESSION["ididioma"],"Sortir"); ?>"><span class="glyphicon glyphicon-off" style="height: 24px; width: 24px; font-size: 24px"></span></a></li>
+    </ul>    
+    <ul class="nav navbar-nav navbar-right">
+        <li><p style="text-align: center; color: white">
+        <?php
+        echo '<br>';
+        echo $_SESSION["username"];
+        ?>
+        </p></li>      
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><p style="text-align: center; color: white; width: 150px;"><?php
+        echo '<br>'; 
+        $idiomes = $dto->seleccionaIdiomesWeb();
+        $iact = $_SESSION["ididioma"];
+        foreach($idiomes as $idioma) 
+        {
+        $border = '';
+        if($iact==$idioma["ididioma"])$border='style="border: solid yellowgreen 2px; background-color: yellowgreen;"';
+        echo '<button class="btn btn-default btn-xs" title="'.$idioma["nom"].'" onclick="traduirWeb('.$idioma["ididioma"].');" '.$border.'><img src="'.$idioma["ruta_bandera"].'" style="height: 15px; width: 25px"></button>';//
+        }
+        ?>
+        </p></li>      
+    </ul>    
+  </div>
+</nav>

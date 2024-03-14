@@ -1,0 +1,64 @@
+<?php $dto = new AdminApiImpl(); ?>
+
+
+
+
+
+<style>
+  /* Cambiar el color de fondo del navbar */
+  .navbar-inverse {
+      background-color:  #043cac; /* Cambia este color al que desees */
+  }
+
+  /* Cambiar el color del texto en el navbar */
+  .navbar-inverse .navbar-nav>li>a {
+      color: #ffffff; /* Cambia este color al que desees */
+  }
+</style>
+
+<div class="container-fluid">
+    <section style="float: left; height: 90px">
+    <a name="logo" href=<?php echo '"'.$_SESSION["webempresa"].'"'; ?> <image <?php echo "src=".'"'.$_SESSION["logoempresa"].'"'; ?> style="height: 90px; width: 300px"></a>
+    </section>
+    <section style="float:right; height: 90px; width: 50%">
+        <p style="text-align: right"><?php echo $_SESSION["username"]; ?></p>
+    </section>
+</div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.php"><?php echo $dto->__($_SESSION["ididioma"],"Control de Presència"); ?></a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a class="btn" href="Logout.php"><?php echo $dto->__($_SESSION["ididioma"],"Sortir"); ?></a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $dto->__($_SESSION["ididioma"],"Usuari"); ?>
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="index.php"><?php echo $dto->__($_SESSION["ididioma"],"Inici"); ?></a></li>
+          <li><a href="EmpleatFitxa.php"><?php echo $dto->__($_SESSION["ididioma"],"Veure Fitxa"); ?></a></li>
+          <!--<li><a href="EmpleatMarcatges.php"><?php echo $dto->__($_SESSION["ididioma"],"Veure Marcatges"); ?></a></li>-->
+          <li><a href="EmpleatCalendari.php?id=<?php echo $_SESSION['id'];  ?>"><?php echo $dto->__($_SESSION["ididioma"],"Veure Calendari"); ?></a></li>
+          <li><a href="modal_test.php?id=<?php echo $_SESSION['id'];  ?>&openModal=true">Solicitar Nuevo Periodo</a></li>
+          <li><a href="CambioContrasea.php?id=<?php echo $_SESSION['id'];  ?>">Cambio Contraseña</a></li>
+
+
+      
+          <li><a href="ViwerSolicExcep.php?View=1">
+            <?php 
+            $isencargado = $dto->getCampPerIdCampTaula("empleat",$_SESSION["id"],"isEncargado");
+            if ($isencargado){
+              echo  $dto->__($_SESSION["ididioma"],"Ver solicitud de periodos");
+            }?></a></li>
+            
+            
+            
+            
+           
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

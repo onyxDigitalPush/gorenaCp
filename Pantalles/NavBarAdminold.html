@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html><?php
+    $dto = new AdminApiImpl(); 
+    ?>
+<div class="container-fluid">
+    <section style="float: left; height: 90px; width: 25%">
+        <a id="logo" <?php echo "href=".'"'.$_SESSION["webempresa"].'"'; ?>><image <?php echo "src=".'"'.$_SESSION["logoempresa"].'"'; ?> style="height: 90px; width: 300px"></a>
+    </section>
+    <section style="float:right; height: 90px; width: 75%">
+        <p style="text-align: right"><?php echo $_SESSION["username"]; ?></p>
+    </section>
+</div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.php"><?php echo $dto->__($_SESSION["ididioma"],"Control de Presència"); ?></a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a class="btn" href="Logout.php"><?php echo $dto->__($_SESSION["ididioma"],"Sortir"); ?></a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $dto->__($_SESSION["ididioma"],"Administrador"); ?>
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="AdminPersones.php"><?php echo $dto->__($_SESSION["ididioma"],"Persones i Marcatges"); ?></a></li>
+          <li><a href="AdminAdvPersones.php"><?php echo $dto->__($_SESSION["ididioma"],"Gestió Avançada Persones"); ?></a></li>
+          <li><a href="AdminActivitats.php"><?php echo $dto->__($_SESSION["ididioma"],"Agenda Setmanal"); ?></a></li>
+          <li><a href="AdminQuadrants.php"><?php echo $dto->__($_SESSION["ididioma"],"Quadrant Mensual"); ?></a></li>
+          <li><a href="AdminInformeBaixes.php"><?php echo $dto->__($_SESSION["ididioma"],"Informe Baixes"); ?></a></li>
+          
+          <li><a href="AdminEmpresa.php"><?php echo $dto->__($_SESSION["ididioma"],"Ajustaments"); ?></a></li>
+        </ul>
+      </li>
+    </ul>
+    <?php
+    if($_SESSION["empleat"]==1) {echo '<ul class="nav navbar-nav navbar-right"><li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">'.$dto->__($_SESSION["ididioma"],"Usuari").'<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="EmpleatFitxa.php">'.$dto->__($_SESSION["ididioma"],"Veure Fitxa").'</a></li>
+          <li><a href="EmpleatMarcatges.php">'.$dto->__($_SESSION["ididioma"],"Veure Marcatges").'</a></li>
+        </ul>
+      </li>
+    </ul>';}
+      ?>
+  </div>
+</nav>
+    </html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html><?php $dto = new AdminApiImpl(); ?>
+
+
+
+<style>
+  /* Cambiar el color de fondo del navbar */
+  .navbar-inverse {
+      background-color: rgba(4, 60, 172, 0.9) !important; /* Color de fondo con transparencia */
+      border: 1px solid rgba(255, 255, 255, 0.1)  !important; /* Borde con transparencia */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7)  !important; /* Sombra suave */
+  }
+
+
+
+  /* Cambiar el color del texto en el navbar */
+  .navbar-inverse .navbar-nav>li>a {
+      color: rgba(255, 255, 255, 0.9)  !important; /* Color de texto con transparencia */
+  }
+
+  .navbar-toggle .glyphicon-menu-hamburger {
+        font-size: 64px; /* Tamaño del icono */
+        color: rgba(255, 255, 255, 0.9)  !important; /* Color de icono con transparencia */
+    }
+
+    .navbar-toggle .icon-bar {
+        background-color: rgba(255, 255, 255, 0.9)  !important; /* Color de las barras del icono con transparencia */
+    }
+
+    .navbar-toggle:hover .icon-bar {
+        background-color: rgba(255, 255, 255, 0.7)  !important; /* Cambia el color al pasar el mouse */
+    }
+
+  .nav{
+	margin-top: 15px  !important;
+  
+}
+
+.nav__list{
+	float: left  !important;
+	list-style: none  !important;
+	margin: 0  !important;
+	padding: 0  !important;
+	position: relative  !important;
+}
+
+.nav__list a{
+	display: block  !important;
+	color: rgba(51, 51, 51, 0.9)  !important; /* Color de texto con transparencia */
+	text-decoration: none  !important;
+	font-weight: 700  !important;
+	font-size: 12px  !important;
+	line-height: 32px  !important;
+	padding: 0 15px  !important;
+}
+
+.nav__list li{
+	position: relative  !important;
+	float:  left  !important;
+	margin: 0  !important;
+	padding: 0  !important;
+}
+
+.nav__list li:hover{
+	background-color: rgba(52, 110, 255, 0.1)  !important; /* Fondo con transparencia al pasar el mouse */
+    backdrop-filter: blur(5px)  !important; /* Efecto de desenfoque al pasar el mouse */
+}
+
+.nav__list ul{
+	display: none  !important;
+	position: absolute  !important;
+	top: 100%  !important;
+	left: 0  !important;
+	background-color: rgba(255, 255, 255, 0.9)  !important; /* Fondo con transparencia */
+	padding: 0  !important;
+	list-style: none  !important;
+    border: 1px solid rgba(0, 0, 0, 0.1)  !important; /* Borde con transparencia */
+    border-top: none  !important;
+}
+
+.nav__list ul li{
+	float: none  !important;
+	width: 200px  !important;
+}
+
+.nav__list ul a{
+	line-height: 120%  !important;
+	padding: 10px 15px  !important;
+}
+
+.nav__list ul ul{
+	position: absolute  !important;
+	top: 0  !important;
+	left: 100%  !important; /* Alinear el menú desplegable a la derecha */
+	background-color: rgba(255, 255, 255, 0.9)  !important; /* Fondo con transparencia */
+}
+
+.nav__list li:hover > ul{
+	display: block  !important;
+}
+
+
+.navbar .hamburger-icon:hover {
+  color: rgba(255, 255, 255, 0.9)  !important; /* Color del ícono */
+    cursor: pointer  !important; /* Cambia el cursor a una manito como si fuera un enlace */
+   
+  }
+
+</style>
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid" style='position: relative'>
+    <div class="navbar-header">
+      <a id="logo" href="index.php" title="Control de Presència"> </a>
+      </div>
+    <ul class="nav navbar-nav navbar-left">
+      <li><a class="btn" href="index.php"><?php echo $dto->__($_SESSION["ididioma"],"Control de Presència"); ?></a></li>
+      <a class="navbar-brand" href="index.php" style="margin-left: 20px;"><?php echo $dto->__($_SESSION["ididioma"],"GORENA");?></a>
+    </ul>  
+   
+
+
+
+	  <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+          <h2 style= " color:white" class="hamburger-icon"  data-toggle="dropdown" >
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            
+              <span class="caret"></span>
+          </h2>
+
+
+<ul class="nav__list dropdown-menu">
+			
+			<li>
+				<a href="#">Administrador</a>
+				<ul>
+          <li><a href="AdminPersones.php"><?php echo $dto->__($_SESSION["ididioma"],"Persones i Marcatges"); ?></a></li>
+          <li><a href="AdminAdvPersones.php"><?php echo $dto->__($_SESSION["ididioma"],"Gestió Avançada Persones"); ?></a></li>
+          <li><a href="AdminActivitats.php"><?php echo $dto->__($_SESSION["ididioma"],"Agenda Setmanal"); ?></a></li>
+          <li><a href="AdminQuadrants.php"><?php echo $dto->__($_SESSION["ididioma"],"Quadrant Mensual"); ?></a></li>
+          <li><a href="AdminVariables.php"><?php echo $dto->__($_SESSION["ididioma"],"Informe Variables"); ?></a></li>
+          <li><a href="AdminInformeBaixes.php"><?php echo $dto->__($_SESSION["ididioma"],"Informe Periodos Especiales"); ?></a></li>
+          <li><a href="informeMarcajesDiarios.php"><?php echo $dto->__($_SESSION["ididioma"],"Informe Marcajes diarios"); ?></a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">Empresa</a>
+        <ul>
+          <li><a href="AdminEmpresa.php"><?php echo $dto->__($_SESSION["ididioma"],"Ajustaments"); ?></a></li>
+				</ul>
+					</li>
+				
+          <li>
+            <a href="#">Personal</a>
+            <ul>
+              <li><a href="ViwerSolicExcep.php?View=957"><?php echo $dto->__($_SESSION["ididioma"],"Solicitudes de periodos"); ?></a></li>
+            </ul>
+              </li>
+              <li>
+                <a class="btn" href="Logout.php" title="<?php echo $dto->__($_SESSION["ididioma"], "Sortir"); ?>"><span class="glyphicon glyphicon-off" style="height: 24px; width: 24px; font-size: 24px;"></span>
+                  <?php echo $dto->__($_SESSION["ididioma"], "Sortir"); ?></a>
+              </li>
+
+				</ul>
+			</li>
+		</ul>
+
+  
+      </li>
+    </ul>
+    <?php
+    if($_SESSION["empleat"]==1) {echo '<ul class="nav navbar-nav navbar-right"><li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">'.$dto->__($_SESSION["ididioma"],"Usuari").'<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="EmpleatFitxa.php">'.$dto->__($_SESSION["ididioma"],"Veure Fitxa").'</a></li>
+          <li><a href="EmpleatMarcatges.php">'.$dto->__($_SESSION["ididioma"],"Veure Marcatges").'</a></li>
+          <li><a href="ViwerSolicExcep.php?View=1">'.$dto->__($_SESSION["ididioma"],"Ver solicitud de periodos").'</a></li>
+        </ul>
+      </li>
+    </ul>';}
+      ?>
+  </div>
+</nav>
+    </html>

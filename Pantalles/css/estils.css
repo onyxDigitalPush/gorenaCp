@@ -1,0 +1,459 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22-mar-2017, 12:41:03
+    Author     : Alex
+*/
+
+#logo {
+    float: none;
+    margin-bottom: 1em;
+    display: block;
+}
+#negre{background-color:black}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+#main{text-align: center;
+    margin: 0 auto;}
+
+#email{width: 25px}
+
+#pwd{width: 20px}
+
+tbody {font-size: 12px}
+
+footer {  position: static;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+input {
+    border-radius: 5px;
+    padding: 3px;
+}
+
+select {
+    border-radius: 5px;
+    padding: 3px;
+}
+
+table {
+    border-radius: 5px;
+    padding: 3px;
+}
+
+thead {
+    background-image: linear-gradient(rgb(45,45,45),rgb(90,90,90),rgb(45,45,45));
+    color: white;
+}
+
+.modal {
+    overflow: hidden;
+}
+.modal-dialog {
+    margin-right: 0;
+    margin-left: 0;
+}
+.modal-header {
+  cursor: move;
+background-image: linear-gradient(rgb(45,45,45),rgb(90,90,90),rgb(45,45,45));
+color: white;
+  height:90px;
+  padding: 20px;
+
+}
+.modal-title {
+  margin-top:-10px;
+  font-size:16px;
+}
+.modal-header .close {
+  margin-top:-10px;
+}
+.modal-body {
+  padding: 5px 35px 20px;
+}
+.modal-body h3 {
+  text-align: center;
+}
+.modal-body p {
+  padding-top:10px;
+  font-size: 1.1em;
+}
+
+.modal-footer {
+    background-color: gainsboro;
+}
+
+.close {
+    height: 30px;
+    width: 30px;
+    background-color: red !important;
+    color: white !important
+}
+
+.modal-body {
+    max-height: 750px;
+    overflow-y: auto
+}
+
+.etiq {
+    background-color: white;
+    border: solid gainsboro 1px;
+    border-radius: 5px;
+    padding: 10px;
+    display: inline;
+    margin: 15px;
+    line-height: 60px
+}
+
+.smtag {
+    background-color: white;
+    border: solid gainsboro 1px;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.headcol {
+  position: absolute;
+  width: 250px;
+  left: 8px;
+  top: auto;
+ 
+  background-color: white;
+  height: 25px;
+}
+
+
+
+.long {
+  
+  height: 25px;
+}
+
+.well{
+    padding: 0px;
+    background-image: linear-gradient(whitesmoke,white,whitesmoke);
+}
+
+.smbox {
+    display: inline-table;
+    background-color: white;
+    border: solid gainsboro 1px;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.btn-separate {
+  margin-right: 10px;
+}
+
+
+
+
+/*Modal para solicitar periodo empleado*/
+
+.modal-content {
+  border-radius: 0;
+}
+.modal-header {
+  background-color: #333;
+  color: #fff;
+  border-bottom: 1px solid #444;
+}
+.modal-title {
+  font-weight: bold;
+  font-size: 24px;
+text-align: center;
+
+}
+.modal-body {
+  padding: 20px;
+}
+.modal-footer {
+  border-top: 1px solid #444;
+}
+.btn {
+  border-radius: 0;
+}
+/*Modal para solicitar periodo empleado*/
+
+
+/*Modal para visualiza periodo admin */
+
+
+.modal-dialog_admin {
+  width: 50%;
+  margin: 0 auto;
+ 
+}
+
+
+.modal-content_admin {
+  background-color: #f2f2f2;
+  border: none;
+ 
+}
+
+.modal-header_admin {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px 5px 0 0;
+}
+
+.modal-header_admin h3 {
+  margin: 0;
+}
+
+.modal-body_admin {
+  padding: 20px;
+}
+
+.label_admin {
+  display: inline-block;
+  width: 100px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+
+
+
+
+
+/*Modal para visualiza periodo admin */
+
+
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group select option {
+  font-weight: normal;
+}
+
+.form-group input[type="date"] {
+  padding: 6px 12px;
+}
+
+.form-group input[type="file"] {
+  display: block;
+  margin-top: 5px;
+}
+
+
+
+
+
+     /* Estilo para el select personalizado */
+
+     .btn-next {
+      position: relative; /* Necesario para el posicionamiento de los elementos internos */
+      padding: 10px 20px;
+      background-color: transparent; /* Fondo transparente */
+      color: black; /* Texto transparente */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease; /* Animación suave en todos los cambios */
+  }
+
+  .btn-next .icon-arrow-right {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 84px; /* Tamaño de la flecha */
+      color: #007bff; /* Color de la flecha antes del hover */
+      transition: color 0.3s ease; /* Animación de cambio de color de la flecha */
+  }
+
+  .btn-next .btn-text {
+      position: relative;
+      z-index: 1; /* Coloca el texto del botón sobre la flecha */
+  }
+
+  .btn-next:hover {
+      background-color: #ff5722; /* Cambia el color de fondo durante el hover */
+      color: #fff; /* Cambia el color del texto durante el hover */
+      transform: scale(1.1); /* Aumenta ligeramente el tamaño durante el hover */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Agrega una sombra durante el hover */
+  }
+
+
+
+  /* Estilos para el select personalizado */
+  .custom-select {
+  appearance: none; /* Elimina los estilos de apariencia nativos del sistema */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f2f2f2; /* Color de fondo del select */
+  border: 1px solid #ccc; /* Borde del select */
+  padding: 10px; /* Espaciado interno del select */
+  border-radius: 5px; /* Radio de borde del select */
+  width: 100%; /* Ancho del select */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el select */
+  }
+
+  /* Estilos para el desplegable del select */
+  .custom-select option {
+  padding: 10px; /* Espaciado interno de las opciones */
+  cursor: pointer; /* Cambia el cursor al pasar sobre las opciones */
+  }
+
+  /* Estilos para el contenedor del select */
+  .custom-select-container {
+  display: inline-block; /* Alinea el contenedor en línea */
+  position: relative; /* Establece una posición relativa para el contenedor */
+  width: 100%; /* Ancho del contenedor */
+  }
+
+  /* Estilos para el triángulo desplegable (flecha) */
+  .custom-select::after {
+  content: '\25BC'; /* Código Unicode para una flecha hacia abajo */
+  position: absolute; /* Posición absoluta en relación con el contenedor */
+  top: 50%; /* Alinea la flecha verticalmente en el centro */
+  right: 10px; /* Espaciado desde el borde derecho */
+  transform: translateY(-50%); /* Alinea la flecha verticalmente en el centro */
+  pointer-events: none; /* Evita que la flecha sea clickeable */
+  }
+
+
+
+
+
+  .select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Ajusta el margen derecho según tu preferencia */
+    transform: translateY(-50%);
+    pointer-events: none; /* Evita que la flecha sea interactiva */
+}
+
+
+
+
+
+  #contenedor {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+  }
+
+  .carrusel {
+      display: flex;
+      overflow: hidden;
+  }
+
+  .pestaña {
+      flex: 0 0 33.33%;
+      padding: 10px;
+      background-color: #f2f2f2;
+      cursor: pointer;
+      text-align: center;
+  }
+
+  .contenido {
+      display: none;
+  }
+
+  .contenido.visible {
+      display: block;
+  }
+
+
+
+  /* Estilo para la tabla */
+  .glass-table {
+  border-collapse: collapse;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px); /* Agrega el efecto de desenfoque */
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Estilo para las celdas de encabezado */
+.glass-table th {
+background: rgba(52, 152, 219, 0.7); /* Azul con transparencia */
+color: #fff;
+text-align: left;
+padding: 15px;
+font-size: 24px;
+
+}
+
+/* Estilo para las celdas de datos */
+.glass-table td {
+  background: rgba(255, 255, 255, 0.4); /* Blanco con transparencia */
+  color: #333;
+  padding: 15px;
+  font-size: 20px;
+
+}
+
+/* Estilo para las celdas de datos */
+.glass-table th {
+  background: rgba(255, 255, 255, 0.4); /* Blanco con transparencia */
+  color: #333;
+  padding: 15px;
+  font-size: 20px;
+
+}
+
+/* Estilo para las filas impares */
+.glass-table tr:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.3); /* Blanco con más transparencia */
+}
+
+/* Estilo para las celdas de entrada */
+
+
+
+.glass-table input {
+border: none; /* Elimina el borde predeterminado */
+background: rgba(255, 255, 255, 0.7); /* Fondo con transparencia */
+width: 100%;
+font-size: 20px;
+color: #333;
+padding: 10px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6); /* Agrega una sombra */
+transition: background 0.3s, box-shadow 0.6s; /* Agrega una transición suave */
+}
+
+/* Estilo para los campos de entrada al enfocar (hover) */
+.glass-table input:focus {
+background: rgba(255, 168, 189, 0.9); /* Cambia el fondo al enfocar */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Aumenta la sombra al enfocar */
+}
+
+
+/* Estilo para los selectores */
+.glass-table select {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 20px;
+  color: #333;
+}
+

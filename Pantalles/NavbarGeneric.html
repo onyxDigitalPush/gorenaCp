@@ -1,0 +1,63 @@
+<div class="container-fluid">
+    <section style="float: left; height: 90px">
+    <a id="logo" href="http://www.g3s.es/" style="float:left; width: 15%"><image src="./Pantalles/img/G3s_g.JPG" alt="G3S"  style="height: 90px; width: 200px"></a>
+    </section>
+    <section style="float:right; height: 90px; width: 85%">
+        <p style="text-align: right">Benvinguts</p>
+    </section>
+</div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.php">Control de Presència</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a class="btn" href="Logout.php">Sortir</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a class="btn" data-toggle="modal" data-target="#modLogin">Login</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrador
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="AdminPersones.php">Persones</a></li>
+          <li><a href="AdminMarcatgesTots.php">Marcatges</a></li>
+          <li><a href="#">Ajustaments Aplicació</a></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuari
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="EmpleatFitxa.php">Veure Fitxa</a></li>
+          <li><a href="EmpleatMarcatges.php">Veure Marcatges</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="modal fade" id="modLogin" role="dialog">
+    <center>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+        <form method="post" action="login.php">
+            <div class="form-group">
+                <label for="email">Identificador:</label>
+                <input class="form-control" name="id" placeholder="Identificador" autocomplete="off" style="width:200px">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Contrasenya:</label>
+                <input type="password" class="form-control" name="pwd" placeholder="Contrasenya" autocomplete="off" style="width:200px">
+            </div>
+            <button type="submit" class="btn btn-default" data-dismiss="modal">Validar-se</button>
+        </form>
+        </div>
+      </div>
+    </div>
+    </center>
+</div>
