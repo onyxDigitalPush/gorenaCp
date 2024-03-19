@@ -1156,6 +1156,20 @@ switch ($_GET["action"])
         }
         echo $msg;
         break;
+        case "eliminaFestivo":
+
+            $idubicacio =  $_GET["1"];
+            $msg = "";
+
+            try{
+                $dto->EliminarHorarios( $idubicacio);
+            } catch (Exception $ex){
+                http_response_code(404);
+                $msg = $ex->getMessage();
+            }
+        echo $msg;
+        break;
+
     case "desaHoresAny":
         $msg = "";
         try{

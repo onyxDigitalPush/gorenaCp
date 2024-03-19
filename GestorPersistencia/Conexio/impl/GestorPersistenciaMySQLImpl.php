@@ -47,7 +47,7 @@ class GestorPersistenciaMySQLImpl implements GestorPersistenciaMySQL
         $this->host = "localhost"; //$host;
         $this->baseDeDades = "gorena_prueba"; //$dbname;
         $this->user = "proyectos"; //$user;
-        $this->password = "4lzCw66_"; //$password;//4lzCw66_
+        $this->password = ""; //$password;//4lzCw66_
 
         /*
           $this->host = "localhost";//$host;

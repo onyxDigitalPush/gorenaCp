@@ -5971,4 +5971,9 @@ $anyActual = date("Y");
         return sprintf("%02d:%02d", $hours, $minutes);
     }
 
+    public function EliminarHorarios( $idubicacio){
+        $sql = 'DELETE FROM localitzacio WHERE idlocalitzacio ='.$idubicacio ;
+        return $this->getDb()->executarSentencia($sql);
+
+    }
 }

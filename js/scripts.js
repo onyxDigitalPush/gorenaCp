@@ -617,6 +617,40 @@ function mostraFestius(idubicacio)
     xmlhttp.open("GET", "ModalFestius.php?&idubicacio=" + idubicacio, true);
     xmlhttp.send();
 }
+function eliminarFestivo(idubicacio)
+{
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+        document.getElementById("modEliminarFestius").innerHTML = this.responseText;
+        $modal = $('#modEliminarFestius');
+            modaldrag();
+        $modal.modal('show'); 
+    }
+    };
+    xmlhttp.open("GET", "ModalEliminarFestius.php?&idubicacio=" + idubicacio, true);
+    xmlhttp.send();
+}
+
+function eliminarFestivoCompleto (idubicacio){
+
+    console.log(idubicacio);
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+        location.reload();
+    }
+    if (this.readyState === 4 && this.status === 404) {
+        popuphtml(this.responseText);
+    }
+    };
+   
+
+    xmlhttp.open("GET", "Serveis.php?action=eliminaFestivo&1=" + idubicacio, true);
+    xmlhttp.send();
+}
+
 function mostraEditaFestius(idubicacio)
 {
     var xmlhttp = new XMLHttpRequest();
