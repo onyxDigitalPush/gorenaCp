@@ -622,7 +622,7 @@ if ($setmana != $dto->__($lng, "Totes")) {
 } else if ($mes != $dto->__($lng, "Tots")) {$diapopup = $any . "-" . $mes . "-01";} else if ($any != $dto->__($lng, "Tots")) {$diapopup = date('Y-m-d', strtotime('today'));}
 		
 $horesteoany = $dto->seleccionaHoresTeoriques($id,$any);
-$horesteomes = $dto->seleccionaHoresTeoriquesMonth($id, $mes);	
+$horesteomes = $dto->seleccionaHoresTeoriquesMonth($id, $mes,$any);	
 	
 		
 $horeslabany = 0.0;
