@@ -5118,10 +5118,10 @@ $anyActual = date("Y");
 
     }
 
-    public function seleccionaHoresTeoriquesMonth($id, $month) {
+   public function seleccionaHoresTeoriquesMonth($id, $month, $any) {
         $hours_date = [];
 
-        $year = date("Y");
+        $year = $any;
         //HORAS TEORICAS TOTALES, SIN DESCONTAR LOS FESTIVOS Y LAS EXCEPCIONES
         $sql = "
         SELECT r.data as data, tt.horestreball as hours
@@ -5145,7 +5145,7 @@ $anyActual = date("Y");
                 join horaris as h on h.idhoraris = t.idhorari
                 join quadrant as q on q.idhorari = h.idhoraris
                 join empleat as e on q.idempleat = e.idempleat
-            where e.idempleat = $id and (($year BETWEEN YEAR(q.datainici) AND YEAR(q.datafi) )||( YEAR(q.datainici)>=0 and q.datafi IS NULL)) AND q.actiu = 1
+            where e.idempleat = $id and (($year BETWEEN YEAR(q.datainici) AND YEAR(q.datafi) )||( YEAR(q.datainici)>=0 and q.datafi IS NULL))
             ";
 
             $rs = $this->getDb()->executarConsulta($sql);
@@ -5260,7 +5260,6 @@ $anyActual = date("Y");
                 join localitzacio as l on l.idlocalitzacio = f.idlocalitzacio
                 join situat as s on s.idlocalitzacio = l.idlocalitzacio
                 join empleat as e on e.idEmpleat = s.idempleat
-            where e.idEmpleat = $id AND YEAR(f.dataany) = $year AND MONTH(f.dataany) = $month AND YEAR(s.datainici) = $year AND MONTH(s.datainici) AND YEAR(s.datafi) = $year AND MONTH(s.datafi)
         ";
         $holiday_days = [];
         $rs_holiday = $this->getDb()->executarConsulta($sql_holiday);
@@ -5272,13 +5271,17 @@ $anyActual = date("Y");
         //HAGO VALOR A 0 LAS HORAS DE ESTAS FECHAS FESTIVOS
         foreach ($holiday_days as $holiday_day)
         {
-            $nuevo_valor = 0;
-            foreach ($hours_date as &$item)
+              //RECORRO EL HOURS DATE
+            foreach ($hours_date as $key => $item)
             {
-                // Verificar si la fecha existe en el arreglo actual
-                if (isset($item[$holiday_day])) {
-                    $item[$holiday_day] = $nuevo_valor;
+                //DENTRO DE CADA ELEMENTO HOURS DATE HAY UN ARRAY ENTONCES TOCA VOLVERLO A RECORRER
+                foreach ($item as $key_aux => $aux_item)
+                {
+                    $dateHoliday = date('m-d' , strtotime($holiday_day));
+                    $dateCalendari = date('m-d' , strtotime($key_aux));
+                    if ($dateHoliday == $dateCalendari) $hours_date[$key][$key_aux] = 0;
                 }
+
             }
         }
 
@@ -5976,4 +5979,142 @@ $anyActual = date("Y");
         return $this->getDb()->executarSentencia($sql);
 
     }
+    public function horasTrabajadas ($id,$mes,$any){
+
+        $sql = "SELECT e.idempleat, e.nom, e.cognom1, e.cognom2,
+        DATE(t1.datahora) AS fecha,
+        TIME(MAX(CASE WHEN t1.entsort = 0 AND t1.row_number = 1 THEN t1.datahora END)) AS entrada1,
+        TIME(MAX(CASE WHEN t1.entsort = 1 AND t1.row_number = 1 THEN t1.datahora END)) AS salida1,
+        TIME(MAX(CASE WHEN t1.entsort = 0 AND t1.row_number = 2 THEN t1.datahora END)) AS entrada2,
+        TIME(MAX(CASE WHEN t1.entsort = 1 AND t1.row_number = 2 THEN t1.datahora END)) AS salida2,
+        TIME(MAX(CASE WHEN t1.entsort = 0 AND t1.row_number = 3 THEN t1.datahora END)) AS entrada3,
+        TIME(MAX(CASE WHEN t1.entsort = 1 AND t1.row_number = 3 THEN t1.datahora END)) AS salida3,
+        GROUP_CONCAT(DISTINCT t1.observacions SEPARATOR ' / ') AS observacions
+    FROM (
+        SELECT m.id_emp,
+        m.datahora,
+        m.entsort,
+        m.observacions,
+        ROW_NUMBER() OVER (PARTITION BY m.id_emp, DATE(m.datahora), m.entsort ORDER BY m.datahora) AS row_number
+        FROM marcatges AS m
+        WHERE YEAR(m.datahora) = '$any' AND MONTH(m.datahora) = '$mes' AND id_emp = '$id'
+        GROUP BY m.id_emp, m.datahora
+    ) AS t1
+    LEFT JOIN empleat AS e ON t1.id_emp = e.idempleat
+    GROUP BY t1.id_emp, DATE(t1.datahora)";
+    
+    
+    $res = $this->getDb()->executarConsulta($sql);
+                    
+        return $res;             
+    
+
+    
+}
+
+public function getDataInformeVariables($idsubemp, $dpt, $rol, $any, $mes)
+{
+
+    $fechaInicial = ' '.$any.'-'.$mes.'-01' ;
+    $fechaFinal = ' '.$any.'-'.$mes.'-31' ;
+
+    $sql = "SELECT e.numafiliacio, e.idempleat, e.nom, e.cognom1, e.cognom2,
+DATE(t1.datahora) AS fecha,
+TIME(MAX(CASE WHEN t1.entsort = 0 AND t1.row_number = 1 THEN t1.datahora END)) AS entrada1,
+TIME(MAX(CASE WHEN t1.entsort = 1 AND t1.row_number = 1 THEN t1.datahora END)) AS salida1,
+TIME(MAX(CASE WHEN t1.entsort = 0 AND t1.row_number = 2 THEN t1.datahora END)) AS entrada2,
+TIME(MAX(CASE WHEN t1.entsort = 1 AND t1.row_number = 2 THEN t1.datahora END)) AS salida2,
+TIME(MAX(CASE WHEN t1.entsort = 0 AND t1.row_number = 3 THEN t1.datahora END)) AS entrada3,
+TIME(MAX(CASE WHEN t1.entsort = 1 AND t1.row_number = 3 THEN t1.datahora END)) AS salida3,
+GROUP_CONCAT(DISTINCT t1.observacions SEPARATOR ' / ') AS observacions,
+ttt.horestreball AS horas_teoricas
+FROM (
+SELECT e.idempleat,
+    m.datahora,
+    m.entsort,
+    m.observacions,
+    ROW_NUMBER() OVER (PARTITION BY e.idempleat, DATE(m.datahora), m.entsort ORDER BY m.datahora) AS row_number
+FROM empleat AS e
+LEFT JOIN marcatges AS m ON e.idempleat = m.id_emp
+WHERE m.datahora >= '$fechaInicial' AND m.datahora <= '$fechaFinal' " ;
+
+// Si se selecciona "Totes", no filtramos por subempresa
+if ($idsubemp != "Totes") $sql .= " AND e.idsubempresa = '$idsubemp'";
+
+$sql .= ") AS t1
+LEFT JOIN empleat AS e ON t1.idempleat = e.idempleat
+LEFT JOIN quadrant AS q ON e.idempleat = q.idempleat
+     LEFT JOIN horaris AS h ON q.idhorari = h.idhoraris
+     LEFT JOIN torn AS ttt ON ttt.idhorari = h.idhoraris
+GROUP BY t1.idempleat, DATE(t1.datahora) ORDER BY e.numafiliacio";
+
+    $res = $this->getDb()->executarConsulta($sql);
+    return $res;
+}
+
+    
+
+public function getHorasEmplead($data) {
+    $result = [];
+
+    foreach ($data as $dataInforme) {
+        $entrada1 = $dataInforme['entrada1'];
+        $entrada2 = $dataInforme['entrada2'];
+        $entrada3 = $dataInforme['entrada3'];
+
+        $salida1 = $dataInforme['salida1'];
+        $salida2 = $dataInforme['salida2'];
+        $salida3 = $dataInforme['salida3'];
+
+        $totalSegundos = 0;
+
+        // Calcular la diferencia en segundos para cada entrada con salida correspondiente
+        if ($entrada1 && $salida1) {
+            $entrada1_segundos = strtotime($entrada1);
+            $salida1_segundos = strtotime($salida1);
+            $totalSegundos += $salida1_segundos - $entrada1_segundos;
+        }
+
+        if ($entrada2 && $salida2) {
+            $entrada2_segundos = strtotime($entrada2);
+            $salida2_segundos = strtotime($salida2);
+            $totalSegundos += $salida2_segundos - $entrada2_segundos;
+        }
+
+        if ($entrada3 && $salida3) {
+            $entrada3_segundos = strtotime($entrada3);
+            $salida3_segundos = strtotime($salida3);
+            $totalSegundos += $salida3_segundos - $entrada3_segundos;
+        }
+
+        // Calcular el total de horas y minutos
+        $totalHoras = floor($totalSegundos / 3600);
+        $totalMinutos = floor(($totalSegundos % 3600) / 60);
+
+        // Formatear el total de horas y minutos
+        $totalFormato = sprintf("%02d:%02d", $totalHoras, $totalMinutos);
+        
+        $idEmpleado = $dataInforme['idempleat'];
+
+        // Verificar si ya existe una entrada para el empleado
+        if (isset($result[$idEmpleado])) {
+            // Si existe, sumar las horas al total existente
+            $result[$idEmpleado]['totalHoras'] += $totalHoras;
+            $result[$idEmpleado]['totalMinutos'] += $totalMinutos;
+        } else {
+            // Si no existe, crear una nueva entrada para el empleado
+            $result[$idEmpleado] = [
+                'idEmpleado' => $idEmpleado,
+                'nombre' => $dataInforme['nom'],
+                'cognom1' =>$dataInforme['cognom1'],
+                'fecha' => $dataInforme['fecha'],
+                'totalHoras' => $totalHoras,
+                'totalMinutos' => $totalMinutos
+            ];
+        }
+    }
+
+    return array_values($result); // Convertir el array asociativo a un array indexado y devolverlo
+}
+
 }
