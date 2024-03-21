@@ -394,7 +394,8 @@ include './Pantalles/HeadGeneric.html';
                     var dia = checkTime(avui.getDate());
                     var hora = checkTime(avui.getHours());
                     var minut = checkTime(avui.getMinutes());
-                    var datahora = any+"-"+mes+"-"+dia+" "+hora+":"+minut;
+                    var sec = checkTime(avui.getSeconds());
+                    var datahora = any + "-" + mes + "-" + dia + " " + hora + ":" + minut + ":" + sec  ; 
 
                     var lati = pos['lat'];
                     var long = pos['lng'];
