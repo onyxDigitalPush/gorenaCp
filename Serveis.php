@@ -221,15 +221,14 @@ switch ($_GET["action"])
                  $idempleat = $dto->mostraIdEmpPerIdentificador($idemp);          
                         $idempresa = $dto->getCampPerIdCampTaula("empleat",$idempleat,"idempresa");
         
-        
-                        $fecha = date("Y-m-d", strtotime($dto->getUltimMarcatgePerIdEmpleat($idempleat, "datahora")));
-                        $fecha = new DateTime($fecha);
-                        $today_date = new DateTime();
-                        $diff = $fecha->diff($today_date);
-                        $primer_marcatge_entrada = $dto->selectPrimerMarcatgeActiu($idempresa);
-
-							//CAMBIAR SI ES PRIMER MARCAJE DEL DIA A ENTRADA
-                        if (($diff->y != 0 || $diff->m != 0 || $diff->d != 0) && $primer_marcatge_entrada == 1 && date("H") > 5) $inout = 0;
+                        $ultima_marcaje = new DateTime($dto->getUltimMarcatgePerIdEmpleat($idempleat, "datahora"));
+                        $hoy = new DateTime();
+                        $diff = $ultima_marcaje->diff($hoy);
+                        
+                        if ($diff->days > 0 && $dto->selectPrimerMarcatgeActiu($idempresa) == 1 && $hoy->format('H') > 5) {
+                            $inout = 0;
+                        }
+                        
                        
         
                         $data = date('Y-m-d',strtotime($datahora));
