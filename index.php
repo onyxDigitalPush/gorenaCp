@@ -366,7 +366,7 @@ include './Pantalles/HeadGeneric.html';
                         }
                         else
                         {
-                            update_date--;
+                             update_date--;
                         }
                     }
                 }
